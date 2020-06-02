@@ -1,0 +1,25 @@
+name: Docker
+
+on: push
+
+env:
+  IMAGE_NAME: gen
+  IMAGE_ID: docker.pkg.github.com/jjs-dev/openapi-gen/gen
+  DOCKER_BUILDKIT: 1
+
+jobs:      
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build src --file Dockerfile --tag $IMAGE_NAME
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: |
+          docker tag $IMAGE_NAME $IMAGE_ID:latest
+          docker push $IMAGE_ID:latest

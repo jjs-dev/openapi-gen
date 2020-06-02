@@ -5,6 +5,7 @@ on: push
 env:
   IMAGE_NAME: gen
   IMAGE_ID: docker.pkg.github.com/jjs-dev/openapi-gen/gen
+  DOCKER_BUILDKIT: 1
 
 jobs:      
   push:

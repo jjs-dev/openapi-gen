@@ -18,6 +18,10 @@ SWAGGER="/work/swagger.json"
 
 api-spec-converter --from openapi_3 --to swagger_2 $INPUT > $SWAGGER
 
+if [[ ! -z "${PRINT_CONVERTED_SCHEMA}" ]]; then
+    cat $SWAGGER    
+fi
+
 echo "generating client"
 
 # TODO why paperclip requires this var?

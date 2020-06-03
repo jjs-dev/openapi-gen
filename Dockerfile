@@ -5,7 +5,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
   sh /dev/stdin -y --default-toolchain nightly --quiet --profile minimal
 ENV PATH /root/.cargo/bin:${PATH}
 WORKDIR /src
-RUN echo dev_rebuild_please 8
 RUN git clone --depth 1 --single-branch --branch custom-client \
   https://github.com/mikailbag/paperclip .
 RUN mkdir /out

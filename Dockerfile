@@ -10,11 +10,12 @@ RUN git clone --depth 1 --single-branch --branch custom-client \
 RUN mkdir /out
 RUN cargo build -Zunstable-options --out-dir /out --features codegen,cli,v2 --release
 
-
-FROM node:14.3.0
+FROM node:slim
 WORKDIR /entry
 RUN npm install -g api-spec-converter
+RUN apt-get update -y && apt-get install -y libssl-dev
 COPY main.sh main.sh
 COPY --from=paperclip /out/paperclip /
 VOLUME [ "/in", "/out" ]
-ENTRYPOINT ["bash", "/entry/main.sh"]
+ENTRYPOINT ["bash"]
+CMD ["/entry/main.sh"]
